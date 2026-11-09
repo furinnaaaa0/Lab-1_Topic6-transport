@@ -25,3 +25,11 @@ class Motorcycle(Vehicle):
     def __init__(self, brand, model, year, has_sidecar):
         super().__init__(brand, model, year)
         self.has_sidecar = has_sidecar
+
+class Fleet:
+    def __init__(self):
+        self.vehicles = []
+
+    def add_vehicle(self, vehicle):
+        self.vehicles.append(vehicle)
+

@@ -41,3 +41,7 @@ class Fleet:
     def add_vehicle(self, vehicle):
         self.vehicles.append(vehicle)
 
+    def get_all_vehicles(self):
+        return self.vehicles
+
+

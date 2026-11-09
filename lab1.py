@@ -6,3 +6,12 @@ class Vehicle:
 
     def show_info(self):
         print(f"{self.brand} {self.model}, {self.year} год")
+
+class Car(Vehicle):
+    def __init__(self, brand, model, year, passengers):
+        super().__init__(brand, model, year)
+        self.passengers = passengers
+
+    def show_info(self):
+        super().show_info()
+        print(f"Количество пассажиров: {self.passengers}")

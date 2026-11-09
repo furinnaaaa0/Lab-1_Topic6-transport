@@ -44,4 +44,9 @@ class Fleet:
     def get_all_vehicles(self):
         return self.vehicles
 
+    def remove_vehicle(self, vehicle):
+        if vehicle in self.vehicles:
+            self.vehicles.remove(vehicle)
+            return True
+        return False
 

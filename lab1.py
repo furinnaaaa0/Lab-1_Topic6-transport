@@ -50,3 +50,11 @@ class Fleet:
             return True
         return False
 
+    def update_vehicle(self, vehicle, brand, model, year):
+        if vehicle in self.vehicles:
+            vehicle.brand = brand
+            vehicle.model = model
+            vehicle.year = year
+            return True
+        return False
+

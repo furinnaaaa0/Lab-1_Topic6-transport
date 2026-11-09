@@ -15,8 +15,13 @@ class Car(Vehicle):
     def show_info(self):
         super().show_info()
         print(f"Количество пассажиров: {self.passengers}")
+
 class Truck(Vehicle):
-    # создаёт грузовой автомобиль
     def __init__(self, brand, model, year, cargo_weight):
         super().__init__(brand, model, year)
         self.cargo_weight = cargo_weight
+
+class Motorcycle(Vehicle):
+    def __init__(self, brand, model, year, has_sidecar):
+        super().__init__(brand, model, year)
+        self.has_sidecar = has_sidecar

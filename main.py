@@ -129,10 +129,12 @@ def main():
                 capacity = int(input("Новая вместимость: "))
                 if capacity <= 0:
                     print("Вместимость должна быть больше нуля")
-                elif garage_service.update_garage(garage_id, owner, capacity):
-                    print("Гараж изменён")
                 else:
-                    print("Гараж не найден")
+                    result = garage_service.update_garage(
+                        garage_id, owner, capacity
+                    )
+                    print(result)
+
 
             elif choice == "10":
                 vehicle_id = int(input("ID транспорта: "))

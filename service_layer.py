@@ -91,9 +91,18 @@ class GarageService:
 
     # Передаёт команду на изменение гаража
     def update_garage(self, garage_id, owner, capacity):
-        return self.repository.update_garage(
-            garage_id, owner, capacity
-        )
+        garage = self.repository.get_by_id(garage_id)
+        if garage is None:
+            return "Гараж не найден"
+        occupied_places = len(self.vehicle_repository.get_vehicles_in_garage(garage_id))
+
+        if capacity < occupied_places:
+            return (
+                "Новая вместимость не может быть меньше количества занятых мест"
+            )
+
+        self.repository.update_garage(garage_id, owner, capacity)
+        return "Гараж изменён"
 
     # Удаляет гараж и освобождает находящийся в нём транспорт
     def remove_garage(self, garage_id):

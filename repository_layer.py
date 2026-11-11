@@ -1,5 +1,3 @@
-from data_layer import Garage
-
 # Класс для хранения и управления транспортными средствами
 class VehicleRepository:
     def __init__(self):
@@ -71,3 +69,24 @@ class GarageRepository:
                 return garage
 
         return None
+
+# Изменяет данные гаража
+    def update_garage(self, garage_id, owner, capacity):
+        garage = self.get_by_id(garage_id)
+
+        if garage is not None:
+            garage.owner = owner
+            garage.capacity = capacity
+            return True
+
+        return False
+
+    # Удаляет гараж по ID
+    def remove_garage(self, garage_id):
+        garage = self.get_by_id(garage_id)
+
+        if garage is not None:
+            self.garages.remove(garage)
+            return True
+
+        return False

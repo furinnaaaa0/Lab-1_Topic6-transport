@@ -1,5 +1,5 @@
-from repository_layer import VehicleRepository
-from service_layer import VehicleService
+from repository_layer import VehicleRepository, GarageRepository
+from service_layer import VehicleService, GarageService
 
 
 # Выводит список транспортных средств
@@ -11,11 +11,22 @@ def print_vehicles(vehicles):
     for vehicle in vehicles:
         print(vehicle.get_info())
 
+# Выводит список гаражей
+def print_garages(garages):
+    if not garages:
+        print("Гаражи не найдены")
+        return
+
+    for garage in garages:
+        print(garage.get_info())
+
 
 # Основная функция программы
 def main():
     repository = VehicleRepository()
     service = VehicleService(repository)
+    garage_repository = GarageRepository()
+    garage_service = GarageService(garage_repository)
 
     # Основной цикл программы
     while True:
@@ -26,6 +37,7 @@ def main():
         print("4. Добавить мотоцикл")
         print("5. Изменить транспорт")
         print("6. Удалить транспорт")
+        print("7. Показать гаражи")
         print("0. Выход")
 
         choice = input("Выберите действие: ")
@@ -88,6 +100,9 @@ def main():
                     print("Транспорт удалён")
                 else:
                     print("Транспорт не найден")
+
+            elif choice == "7":
+                print_garages(garage_service.get_all_garages())
 
             elif choice == "0":
                 print("Программа завершена")

@@ -206,6 +206,6 @@ class TransportGarageTest(unittest.TestCase):
             self.vehicle_repository.get_by_id(car.id)
         )
 
-    if __name__ == "__main__":
-        unittest.main()
+if __name__ == "__main__":
+    unittest.main()
 

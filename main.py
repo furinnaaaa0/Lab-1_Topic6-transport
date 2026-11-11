@@ -38,6 +38,7 @@ def main():
         print("5. Изменить транспорт")
         print("6. Удалить транспорт")
         print("7. Показать гаражи")
+        print("8. Добавить гараж")
         print("0. Выход")
 
         choice = input("Выберите действие: ")
@@ -103,6 +104,14 @@ def main():
 
             elif choice == "7":
                 print_garages(garage_service.get_all_garages())
+
+            elif choice == "8":
+                owner = input("Владелец гаража: ")
+                capacity = int(input("Вместимость гаража: "))
+
+                garage = garage_service.add_garage(owner, capacity)
+                print("Гараж добавлен")
+                print(garage.get_info())
 
             elif choice == "0":
                 print("Программа завершена")

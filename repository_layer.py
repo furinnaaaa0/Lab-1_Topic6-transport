@@ -1,3 +1,5 @@
+from data_layer import Garage
+
 # Класс для хранения и управления транспортными средствами
 class VehicleRepository:
     def __init__(self):
@@ -44,3 +46,28 @@ class VehicleRepository:
             return True
 
         return False
+
+# Класс для хранения и управления гаражами
+class GarageRepository:
+    def __init__(self):
+        self.garages = []
+        self.next_id = 1
+
+    # Добавляет гараж и присваивает ему ID
+    def add_garage(self, garage):
+        garage.id = f"G{self.next_id}"
+        self.next_id += 1
+        self.garages.append(garage)
+        return garage
+
+    # Возвращает список всех гаражей
+    def get_all_garages(self):
+        return self.garages
+
+    # Ищет гараж по его ID
+    def get_by_id(self, garage_id):
+        for garage in self.garages:
+            if garage.id == garage_id:
+                return garage
+
+        return None

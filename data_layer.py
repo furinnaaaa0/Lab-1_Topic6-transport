@@ -42,3 +42,18 @@ class Motorcycle(Vehicle):
     # Добавляет информацию о наличии коляски
     def get_info(self):
         return super().get_info() + f" | Коляска: {self.has_sidecar}"
+
+
+# Класс гаража
+class Garage:
+    def __init__(self, owner, capacity):
+        self.id = None
+        self.owner = owner
+        self.capacity = capacity
+
+    # Возвращает информацию о гараже
+    def get_info(self, occupied_places=0):
+        return (
+            f"ID: {self.id} | Владелец: {self.owner} | "
+            f"Всего мест: {self.capacity} | Занято: {occupied_places}"
+        )

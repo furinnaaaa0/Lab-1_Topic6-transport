@@ -2,8 +2,9 @@ from data_layer import Car, Truck, Motorcycle, Garage
 
 # Класс для работы с транспортом
 class VehicleService:
-    def __init__(self, repository):
+    def __init__(self, repository, garage_repository):
         self.repository = repository
+        self.garage_repository = garage_repository
 
     # Создаёт автомобиль и добавляет его в репозиторий
     def add_car(self, brand, model, year, passengers):
@@ -33,6 +34,29 @@ class VehicleService:
     # Передаёт команду на удаление транспорта
     def remove_vehicle(self, vehicle_id):
         return self.repository.remove_vehicle(vehicle_id)
+    # Размещает транспорт в гараже
+    def place_vehicle_in_garage(self, vehicle_id, garage_id):
+        vehicle = self.repository.get_by_id(vehicle_id)
+        garage = self.garage_repository.get_by_id(garage_id)
+
+        if vehicle is None:
+            return "Транспорт не найден"
+
+        if garage is None:
+            return "Гараж не найден"
+
+        if vehicle.garage_id is not None:
+            return "Транспорт уже находится в гараже"
+
+        vehicles_in_garage = self.repository.get_vehicles_in_garage(
+            garage_id
+        )
+
+        if len(vehicles_in_garage) >= garage.capacity:
+            return "В гараже нет свободных мест"
+
+        self.repository.set_vehicle_garage(vehicle_id, garage_id)
+        return "Транспорт размещён в гараже"
 
 
 # Класс для работы с гаражами

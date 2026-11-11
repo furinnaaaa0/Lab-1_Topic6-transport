@@ -12,20 +12,25 @@ def print_vehicles(vehicles):
         print(vehicle.get_info())
 
 # Выводит список гаражей
-def print_garages(garages):
+def print_garages(garages, vehicle_service):
     if not garages:
         print("Гаражи не найдены")
         return
 
     for garage in garages:
-        print(garage.get_info())
+        vehicles = vehicle_service.repository.get_vehicles_in_garage(
+            garage.id
+        )
+        occupied_places = len(vehicles)
+
+        print(garage.get_info(occupied_places))
 
 
 # Основная функция программы
 def main():
     repository = VehicleRepository()
-    service = VehicleService(repository)
     garage_repository = GarageRepository()
+    service = VehicleService(repository, garage_repository)
     garage_service = GarageService(garage_repository)
 
     # Основной цикл программы
@@ -39,6 +44,8 @@ def main():
         print("6. Удалить транспорт")
         print("7. Показать гаражи")
         print("8. Добавить гараж")
+        print("9. Изменить гараж")
+        print("10. Разместить транспорт в гараже")
         print("0. Выход")
 
         choice = input("Выберите действие: ")
@@ -102,8 +109,9 @@ def main():
                 else:
                     print("Транспорт не найден")
 
+
             elif choice == "7":
-                print_garages(garage_service.get_all_garages())
+                print_garages(garage_service.get_all_garages(),service)
 
             elif choice == "8":
                 owner = input("Владелец гаража: ")
@@ -112,6 +120,27 @@ def main():
                 garage = garage_service.add_garage(owner, capacity)
                 print("Гараж добавлен")
                 print(garage.get_info())
+
+            elif choice == "9":
+                garage_id = input("ID гаража: ")
+                owner = input("Новый владелец: ")
+                capacity = int(input("Новая вместимость: "))
+
+                if capacity <= 0:
+                    print("Вместимость должна быть больше нуля")
+                elif garage_service.update_garage(garage_id, owner, capacity):
+                    print("Гараж изменён")
+                else:
+                    print("Гараж не найден")
+
+            elif choice == "10":
+                vehicle_id = int(input("ID транспорта: "))
+                garage_id = input("ID гаража: ")
+
+                result = service.place_vehicle_in_garage(
+                    vehicle_id, garage_id
+                )
+                print(result)
 
             elif choice == "0":
                 print("Программа завершена")

@@ -2,6 +2,7 @@
 class Vehicle:
     def __init__(self, brand, model, year):
         self.id = None
+        self.garage_id = None
         self.brand = brand
         self.model = model
         self.year = year

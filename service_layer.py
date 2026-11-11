@@ -58,11 +58,27 @@ class VehicleService:
         self.repository.set_vehicle_garage(vehicle_id, garage_id)
         return "Транспорт размещён в гараже"
 
+     # Убирает транспорт из гаража
+    def remove_vehicle_from_garage(self, vehicle_id):
+        vehicle = self.repository.get_by_id(vehicle_id)
+
+        if vehicle is None:
+            return "Транспорт не найден"
+
+        if vehicle.garage_id is None:
+            return "Транспорт не находится в гараже"
+
+        self.repository.remove_vehicle_from_garage(vehicle_id)
+        return "Транспорт убран из гаража"
+
+
+
 
 # Класс для работы с гаражами
 class GarageService:
-    def __init__(self, repository):
+    def __init__(self, repository, vehicle_repository):
         self.repository = repository
+        self.vehicle_repository = vehicle_repository
 
     # Создаёт гараж и добавляет его в репозиторий
     def add_garage(self, owner, capacity):
@@ -79,6 +95,15 @@ class GarageService:
             garage_id, owner, capacity
         )
 
-    # Передаёт команду на удаление гаража
+    # Удаляет гараж и освобождает находящийся в нём транспорт
     def remove_garage(self, garage_id):
+        garage = self.repository.get_by_id(garage_id)
+
+        if garage is None:
+            return False
+
+        self.vehicle_repository.remove_vehicles_from_garage(
+            garage_id
+        )
+
         return self.repository.remove_garage(garage_id)

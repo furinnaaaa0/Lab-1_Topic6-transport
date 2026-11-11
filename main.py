@@ -31,7 +31,7 @@ def main():
     repository = VehicleRepository()
     garage_repository = GarageRepository()
     service = VehicleService(repository, garage_repository)
-    garage_service = GarageService(garage_repository)
+    garage_service = GarageService(garage_repository,repository)
 
     # Основной цикл программы
     while True:
@@ -46,6 +46,8 @@ def main():
         print("8. Добавить гараж")
         print("9. Изменить гараж")
         print("10. Разместить транспорт в гараже")
+        print("11. Убрать транспорт из гаража")
+        print("12. Удалить гараж")
         print("0. Выход")
 
         choice = input("Выберите действие: ")
@@ -126,13 +128,6 @@ def main():
                 owner = input("Новый владелец: ")
                 capacity = int(input("Новая вместимость: "))
 
-                if capacity <= 0:
-                    print("Вместимость должна быть больше нуля")
-                elif garage_service.update_garage(garage_id, owner, capacity):
-                    print("Гараж изменён")
-                else:
-                    print("Гараж не найден")
-
             elif choice == "10":
                 vehicle_id = int(input("ID транспорта: "))
                 garage_id = input("ID гаража: ")
@@ -141,6 +136,26 @@ def main():
                     vehicle_id, garage_id
                 )
                 print(result)
+
+            elif choice == "11":
+                vehicle_id = int(input("ID транспорта: "))
+                result = service.remove_vehicle_from_garage(vehicle_id)
+                print(result)
+
+            elif choice == "12":
+                garage_id = input("ID гаража: ")
+
+                if garage_service.remove_garage(garage_id):
+                    print("Гараж удалён")
+                else:
+                    print("Гараж не найден")
+
+                if capacity <= 0:
+                    print("Вместимость должна быть больше нуля")
+                elif garage_service.update_garage(garage_id, owner, capacity):
+                    print("Гараж изменён")
+                else:
+                    print("Гараж не найден")
 
             elif choice == "0":
                 print("Программа завершена")

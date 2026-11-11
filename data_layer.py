@@ -9,7 +9,9 @@ class Vehicle:
 
     # Возвращает основную информацию о транспортном средстве
     def get_info(self):
-        return f"ID: {self.id} | {self.brand} {self.model}, {self.year} год"
+        garage = self.garage_id if self.garage_id is not None else "Нет"
+        return (f"ID: {self.id} | {self.brand} {self.model}, {self.year} год" f" | В гараже: {garage}"
+        )
 
 
 # Класс автомобиля

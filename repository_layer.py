@@ -40,6 +40,22 @@ class VehicleRepository:
 
         return False
 
+    # Убирает транспорт из гаража
+    def remove_vehicle_from_garage(self, vehicle_id):
+        vehicle = self.get_by_id(vehicle_id)
+
+        if vehicle is not None:
+            vehicle.garage_id = None
+            return True
+
+        return False
+
+    # Освобождает весь транспорт из указанного гаража
+    def remove_vehicles_from_garage(self, garage_id):
+        for vehicle in self.vehicles:
+            if vehicle.garage_id == garage_id:
+                vehicle.garage_id = None
+
     # Удаляет транспорт по ID
     def remove_vehicle(self, vehicle_id):
         vehicle = self.get_by_id(vehicle_id)

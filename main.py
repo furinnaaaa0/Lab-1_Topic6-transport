@@ -127,6 +127,12 @@ def main():
                 garage_id = input("ID гаража: ")
                 owner = input("Новый владелец: ")
                 capacity = int(input("Новая вместимость: "))
+                if capacity <= 0:
+                    print("Вместимость должна быть больше нуля")
+                elif garage_service.update_garage(garage_id, owner, capacity):
+                    print("Гараж изменён")
+                else:
+                    print("Гараж не найден")
 
             elif choice == "10":
                 vehicle_id = int(input("ID транспорта: "))
@@ -147,13 +153,6 @@ def main():
 
                 if garage_service.remove_garage(garage_id):
                     print("Гараж удалён")
-                else:
-                    print("Гараж не найден")
-
-                if capacity <= 0:
-                    print("Вместимость должна быть больше нуля")
-                elif garage_service.update_garage(garage_id, owner, capacity):
-                    print("Гараж изменён")
                 else:
                     print("Гараж не найден")
 

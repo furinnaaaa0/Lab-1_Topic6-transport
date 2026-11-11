@@ -89,6 +89,13 @@ class GarageService:
     def get_all_garages(self):
         return self.repository.get_all_garages()
 
+    # Возвращает количество занятых мест в гараже
+    def get_occupied_places(self, garage_id):
+        vehicles = self.vehicle_repository.get_vehicles_in_garage(
+            garage_id
+        )
+        return len(vehicles)
+
     # Передаёт команду на изменение гаража
     def update_garage(self, garage_id, owner, capacity):
         garage = self.repository.get_by_id(garage_id)

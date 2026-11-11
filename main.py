@@ -12,18 +12,18 @@ def print_vehicles(vehicles):
         print(vehicle.get_info())
 
 # Выводит список гаражей
-def print_garages(garages, vehicle_service):
-    if not garages:
-        print("Гаражи не найдены")
-        return
-
+def print_garages(garages, garage_service):
     for garage in garages:
-        vehicles = vehicle_service.repository.get_vehicles_in_garage(
+        occupied_places = garage_service.get_occupied_places(
             garage.id
         )
-        occupied_places = len(vehicles)
 
-        print(garage.get_info(occupied_places))
+        print(
+            f"ID: {garage.id} | Владелец: {garage.owner} | "
+            f"Всего мест: {garage.capacity} | "
+            f"Занято: {occupied_places}"
+        )
+
 
 
 # Основная функция программы
@@ -113,7 +113,7 @@ def main():
 
 
             elif choice == "7":
-                print_garages(garage_service.get_all_garages(),service)
+                print_garages(garage_service.get_all_garages(),garage_service)
 
             elif choice == "8":
                 owner = input("Владелец гаража: ")

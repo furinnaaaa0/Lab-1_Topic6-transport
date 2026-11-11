@@ -1,16 +1,21 @@
+# Класс для хранения и управления транспортными средствами
 class VehicleRepository:
     def __init__(self):
         self.vehicles = []
         self.next_id = 1
 
+    # Добавляет транспорт в список и присваивает ему ID
     def add_vehicle(self, vehicle):
         vehicle.id = self.next_id
         self.next_id += 1
         self.vehicles.append(vehicle)
+        return vehicle
 
+    # Возвращает весь список транспорта
     def get_all_vehicles(self):
         return self.vehicles
 
+    # Ищет транспорт по его ID
     def get_by_id(self, vehicle_id):
         for vehicle in self.vehicles:
             if vehicle.id == vehicle_id:
@@ -18,6 +23,7 @@ class VehicleRepository:
 
         return None
 
+# Удаляет транспорт по ID
     def remove_vehicle(self, vehicle_id):
         vehicle = self.get_by_id(vehicle_id)
 
@@ -27,6 +33,7 @@ class VehicleRepository:
 
         return False
 
+    # Изменяет основные данные найденного транспорта
     def update_vehicle(self, vehicle_id, brand, model, year):
         vehicle = self.get_by_id(vehicle_id)
 

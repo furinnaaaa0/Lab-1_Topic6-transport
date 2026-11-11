@@ -2,6 +2,7 @@ from repository_layer import VehicleRepository
 from service_layer import VehicleService
 
 
+# Выводит список транспортных средств
 def print_vehicles(vehicles):
     if not vehicles:
         print("Транспорт не найден")
@@ -11,10 +12,12 @@ def print_vehicles(vehicles):
         print(vehicle.get_info())
 
 
+# Основная функция программы
 def main():
     repository = VehicleRepository()
     service = VehicleService(repository)
 
+    # Основной цикл программы
     while True:
         print("\n--- Управление транспортом ---")
         print("1. Показать транспорт")
@@ -27,6 +30,7 @@ def main():
 
         choice = input("Выберите действие: ")
 
+        # Обрабатывает ошибки при вводе чисел
         try:
             if choice == "1":
                 print_vehicles(service.get_all_vehicles())
@@ -96,5 +100,6 @@ def main():
             print("Ошибка: введите корректное число")
 
 
+# Запускает программу
 if __name__ == "__main__":
     main()

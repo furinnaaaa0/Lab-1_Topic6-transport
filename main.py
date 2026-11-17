@@ -188,8 +188,8 @@ def main():
             else:
                 print("Неверный пункт меню")
 
-        except ValueError:
-            print("Ошибка: введите корректное число")
+        except ValueError as error:
+            print(f"Ошибка: {error}")
 
 
 # Запускает программу

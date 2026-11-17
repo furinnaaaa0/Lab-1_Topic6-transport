@@ -8,16 +8,26 @@ class VehicleService:
 
     # Создаёт автомобиль и добавляет его в репозиторий
     def add_car(self, brand, model, year, passengers):
+        if year <= 0:
+            raise ValueError("Год выпуска должен быть больше нуля")
+        if passengers <= 0:
+            raise ValueError("Количество пассажиров должно быть больше нуля")
         car = Car(brand, model, year, passengers)
         return self.repository.add_vehicle(car)
 
     # Создаёт грузовик и добавляет его в репозиторий
     def add_truck(self, brand, model, year, cargo_weight):
+        if year <= 0:
+            raise ValueError("Год выпуска должен быть больше нуля")
+        if cargo_weight <= 0:
+            raise ValueError("Вес груза должен быть больше нуля")
         truck = Truck(brand, model, year, cargo_weight)
         return self.repository.add_vehicle(truck)
 
     # Создаёт мотоцикл и добавляет его в репозиторий
     def add_motorcycle(self, brand, model, year, has_sidecar):
+        if year <= 0:
+            raise ValueError("Год выпуска должен быть больше нуля")
         motorcycle = Motorcycle(brand, model, year, has_sidecar)
         return self.repository.add_vehicle(motorcycle)
 
@@ -27,9 +37,9 @@ class VehicleService:
 
     # Передаёт команду на изменение транспорта
     def update_vehicle(self, vehicle_id, brand, model, year):
-        return self.repository.update_vehicle(
-            vehicle_id, brand, model, year
-        )
+        if year <= 0:
+            raise ValueError("Год выпуска должен быть больше нуля")
+        return self.repository.update_vehicle(vehicle_id, brand, model, year)
 
     # Передаёт команду на удаление транспорта
     def remove_vehicle(self, vehicle_id):
@@ -82,6 +92,8 @@ class GarageService:
 
     # Создаёт гараж и добавляет его в репозиторий
     def add_garage(self, owner, capacity):
+        if capacity <= 0:
+            raise ValueError("Вместимость гаража должна быть больше нуля")
         garage = Garage(owner, capacity)
         return self.repository.add_garage(garage)
 
@@ -98,16 +110,16 @@ class GarageService:
 
     # Передаёт команду на изменение гаража
     def update_garage(self, garage_id, owner, capacity):
+        if capacity <= 0:
+            raise ValueError("Вместимость гаража должна быть больше нуля")
         garage = self.repository.get_by_id(garage_id)
         if garage is None:
             return "Гараж не найден"
-        occupied_places = len(self.vehicle_repository.get_vehicles_in_garage(garage_id))
-
+        occupied_places = len( self.vehicle_repository.get_vehicles_in_garage(garage_id))
         if capacity < occupied_places:
             return (
                 "Новая вместимость не может быть меньше количества занятых мест"
             )
-
         self.repository.update_garage(garage_id, owner, capacity)
         return "Гараж изменён"
 

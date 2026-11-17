@@ -141,3 +141,21 @@ def load_data(vehicle_repository, garage_repository):
     garage_repository.next_id = garage_next_id
 
     return True
+
+# Удаляет сохранённые и текущие данные
+def delete_data(vehicle_repository, garage_repository):
+    file_exists = STORAGE_FILE.exists()
+
+    # Очищаем транспорт
+    vehicle_repository.vehicles.clear()
+    vehicle_repository.next_id = 1
+
+    # Очищаем гаражи
+    garage_repository.garages.clear()
+    garage_repository.next_id = 1
+
+    # Удаляем JSON-файл, если он существует
+    if file_exists:
+        STORAGE_FILE.unlink()
+
+    return file_exists

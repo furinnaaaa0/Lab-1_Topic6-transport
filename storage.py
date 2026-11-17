@@ -39,3 +39,50 @@ def garage_to_dict(garage):
         "owner": garage.owner,
         "capacity": garage.capacity
     }
+
+# Восстанавливает транспортный объект из словаря
+def dict_to_vehicle(data):
+    vehicle_type = data["type"]
+
+    if vehicle_type == "Car":
+        vehicle = Car(
+            data["brand"],
+            data["model"],
+            data["year"],
+            data["passengers"]
+        )
+
+    elif vehicle_type == "Truck":
+        vehicle = Truck(
+            data["brand"],
+            data["model"],
+            data["year"],
+            data["cargo_weight"]
+        )
+
+    elif vehicle_type == "Motorcycle":
+        vehicle = Motorcycle(
+            data["brand"],
+            data["model"],
+            data["year"],
+            data["has_sidecar"]
+        )
+
+    else:
+        raise ValueError("Неизвестный тип транспорта в файле")
+
+    vehicle.id = data["id"]
+    vehicle.garage_id = data["garage_id"]
+
+    return vehicle
+
+# Восстанавливает гараж из словаря
+def dict_to_garage(data):
+    garage = Garage(
+        data["owner"],
+        data["capacity"]
+    )
+
+    garage.id = data["id"]
+
+    return garage

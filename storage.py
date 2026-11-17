@@ -86,3 +86,58 @@ def dict_to_garage(data):
     garage.id = data["id"]
 
     return garage
+
+# Сохраняет данные в JSON
+def save_data(vehicle_repository, garage_repository):
+    data = {
+        "vehicles": [
+            vehicle_to_dict(vehicle)
+            for vehicle in vehicle_repository.vehicles
+        ],
+
+        "garages": [
+            garage_to_dict(garage)
+            for garage in garage_repository.garages
+        ],
+
+        "vehicle_next_id": vehicle_repository.next_id,
+        "garage_next_id": garage_repository.next_id
+    }
+
+    temp_file = STORAGE_FILE.with_suffix(".json.tmp")
+
+    with open(temp_file, "w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
+
+    temp_file.replace(STORAGE_FILE)
+
+# Загружает данные из JSON
+def load_data(vehicle_repository, garage_repository):
+    if not STORAGE_FILE.exists():
+        return False
+
+    with open(STORAGE_FILE, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    # Сначала восстанавливаем данные отдельно
+    vehicles = [
+        dict_to_vehicle(item)
+        for item in data["vehicles"]
+    ]
+
+    garages = [
+        dict_to_garage(item)
+        for item in data["garages"]
+    ]
+
+    vehicle_next_id = data["vehicle_next_id"]
+    garage_next_id = data["garage_next_id"]
+
+    # Заменяем содержимое репозиториев
+    vehicle_repository.vehicles = vehicles
+    vehicle_repository.next_id = vehicle_next_id
+
+    garage_repository.garages = garages
+    garage_repository.next_id = garage_next_id
+
+    return True

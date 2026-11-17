@@ -165,8 +165,10 @@ def main():
                 print("Данные сохранены")
 
             elif choice == "14":
-                load_data(repository, garage_repository)
-                print("Данные загружены")
+                if load_data(repository, garage_repository):
+                    print("Данные загружены")
+                else:
+                    print("Файл сохранения не найден")
 
             elif choice == "15":
                 answer = input(

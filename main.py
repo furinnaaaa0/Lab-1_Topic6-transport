@@ -1,6 +1,6 @@
 from repository_layer import VehicleRepository, GarageRepository
 from service_layer import VehicleService, GarageService
-
+from storage import save_data, load_data, delete_data
 
 # Выводит список транспортных средств
 def print_vehicles(vehicles):
@@ -48,6 +48,9 @@ def main():
         print("10. Разместить транспорт в гараже")
         print("11. Убрать транспорт из гаража")
         print("12. Удалить гараж")
+        print("13. Сохранить данные")
+        print("14. Загрузить данные")
+        print("15. Удалить все данные")
         print("0. Выход")
 
         choice = input("Выберите действие: ")
@@ -157,6 +160,24 @@ def main():
                     print("Гараж удалён")
                 else:
                     print("Гараж не найден")
+            elif choice == "13":
+                save_data(repository, garage_repository)
+                print("Данные сохранены")
+
+            elif choice == "14":
+                load_data(repository, garage_repository)
+                print("Данные загружены")
+
+            elif choice == "15":
+                answer = input(
+                    "Вы действительно хотите удалить все данные? (да/нет): "
+                ).lower()
+
+                if answer == "да":
+                    delete_data(repository, garage_repository)
+                    print("Все данные удалены")
+                else:
+                    print("Удаление отменено")
 
             elif choice == "0":
                 print("Программа завершена")
